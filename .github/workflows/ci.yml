@@ -65,30 +65,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build base image (needed as ARG BASE_IMAGE)
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          load: true
-          tags: goosecode-server:latest
-          cache-from: type=gha
+        run: docker build -t goosecode-server:latest -f Dockerfile .
 
       - name: Build ${{ matrix.distro }}
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./distros/${{ matrix.distro }}/Dockerfile
-          push: false
-          tags: ${{ matrix.distro }}:ci
-          build-args: |
-            BASE_IMAGE=goosecode-server:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: docker build --build-arg BASE_IMAGE=goosecode-server:latest -t ${{ matrix.distro }}:ci -f ./distros/${{ matrix.distro }}/Dockerfile .
 
   # ---------------------------------------------------------------------------
   # Integration test — start base container, hit the Goose API health endpoint
