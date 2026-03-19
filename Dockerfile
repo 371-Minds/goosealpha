@@ -51,6 +51,7 @@ COPY ./install-goose.sh /usr/local/bin/install-goose.sh
 RUN chmod +x /usr/local/bin/install-goose.sh
 
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Copy static resources
