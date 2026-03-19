@@ -1,13 +1,13 @@
 # goose-mnn — Goose distribution for Alibaba MNN workflows
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - A shallow checkout of alibaba/MNN
 #   - Goose system prompt tuned for edge/mobile inference tasks
 #
 # Build:
 #   docker build -t goose-mnn -f distros/goose-mnn/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

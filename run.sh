@@ -2,7 +2,7 @@
 set -e
 
 # Variables
-IMAGE_NAME="goosecode-server"
+IMAGE_NAME="goosecode-base"
 CONTAINER_NAME="goosecode-server"
 HOST_PORT=8080
 CONTAINER_PORT=8080

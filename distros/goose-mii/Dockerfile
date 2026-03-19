@@ -1,13 +1,13 @@
 # goose-mii — Goose distribution for DeepSpeed-MII workflows
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - A shallow checkout of deepspeedai/DeepSpeed-MII
 #   - Goose system prompt tuned for distributed inference tasks
 #
 # Build:
 #   docker build -t goose-mii -f distros/goose-mii/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

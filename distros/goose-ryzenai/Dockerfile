@@ -1,13 +1,13 @@
 # goose-ryzenai — Goose distribution for RyzenAI-SW workflows
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - A shallow checkout of k-rks/RyzenAI-SW
 #   - Goose system prompt tuned for AMD Ryzen AI tasks
 #
 # Build:
 #   docker build -t goose-ryzenai -f distros/goose-ryzenai/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

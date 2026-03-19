@@ -92,7 +92,7 @@ chmod +x run.sh
 
 ## Custom Distros
 
-Build a Goose distribution pre-packed with the exact CLIs and system prompts for your target platform.
+Build a Goose distribution pre-packed with the exact CLIs and system prompts for your target platform. The repository now builds a shared `goosecode-base` image first, then layers each distro on top of it.
 
 ### goose-akash — Akash Network deployments
 
@@ -100,11 +100,11 @@ Adds the Akash CLI, IPFS CLI, SQLite, and pre-loaded SDL templates.  System prom
 
 ```bash
 # Build base first
-docker build -t goosecode-server:latest .
+docker build -t goosecode-base:latest .
 
 # Build distro
 docker build -t goose-akash \
-  --build-arg BASE_IMAGE=goosecode-server:latest \
+  --build-arg BASE_IMAGE=goosecode-base:latest \
   -f distros/goose-akash/Dockerfile \
   .
 ```
@@ -122,7 +122,7 @@ Adds Node.js LTS, pnpm, Vercel CLI, Expo CLI, and EAS CLI.  System prompt is tun
 
 ```bash
 docker build -t goose-vercel \
-  --build-arg BASE_IMAGE=goosecode-server:latest \
+  --build-arg BASE_IMAGE=goosecode-base:latest \
   -f distros/goose-vercel/Dockerfile \
   .
 ```
@@ -144,7 +144,7 @@ checkout at `/opt/integrations/mindport` so agents can inspect upstream behavior
 
 ```bash
 docker build -t goose-mindport \
-  --build-arg BASE_IMAGE=goosecode-server:latest \
+  --build-arg BASE_IMAGE=goosecode-base:latest \
   -f distros/goose-mindport/Dockerfile \
   .
 ```
@@ -165,7 +165,7 @@ integrations at `/api/dns/providers` without returning any stored secrets.
 
 ### AI runtime distros
 
-These distros extend the base Goosecode Server image with shallow checkouts of the requested
+These distros extend the shared `goosecode-base` image with shallow checkouts of the requested
 runtime projects under `/opt/integrations`, plus system prompts tuned for each workflow.
 
 | Distro | Integrated project | Runtime checkout path |
@@ -181,12 +181,12 @@ Example build commands:
 
 ```bash
 docker build -t goose-picollm \
-  --build-arg BASE_IMAGE=goosecode-server:latest \
+  --build-arg BASE_IMAGE=goosecode-base:latest \
   -f distros/goose-picollm/Dockerfile \
   .
 
 docker build -t goose-mii \
-  --build-arg BASE_IMAGE=goosecode-server:latest \
+  --build-arg BASE_IMAGE=goosecode-base:latest \
   -f distros/goose-mii/Dockerfile \
   .
 ```
@@ -280,7 +280,7 @@ You can pass environment variables and configuration options directly to the scr
 |--------|-------------|---------|
 | `--rebuild` | Force rebuild of the Docker image | - |
 | `--port=VALUE` | Host port to map to container | 8080 |
-| `--image=VALUE` | Custom Docker image name | goosecode-server |
+| `--image=VALUE` | Custom Docker image name | goosecode-base |
 | `--container=VALUE` | Custom container name | goosecode-server |
 | `--openai-key=VALUE` | OpenAI API key | From .env |
 | `--password=VALUE` | VS Code Server password | From .env or "talktomegoose" |
@@ -387,14 +387,14 @@ The VS Code Server instance comes pre-configured with:
 
 ## Docker Container Management
 
-### Building the Container
+### Building the Base Container
 ```bash
-docker build -t goosecode-server .
+docker build -t goosecode-base .
 ```
 
 ### Running the Container Manually
 ```bash
-docker run -d -p 8080:8080 -p 8000:8000 --name goosecode-server --env-file .env goosecode-server
+docker run -d -p 8080:8080 -p 8000:8000 --name goosecode-server --env-file .env goosecode-base
 ```
 
 ### Managing the Container
@@ -417,7 +417,7 @@ docker exec -it goosecode-server bash
 
 ### Customizing Port or Password
 ```bash
-docker run -d -p 8888:8080 -e PASSWORD="your-secure-password" --name goosecode-server --env-file .env goosecode-server
+docker run -d -p 8888:8080 -e PASSWORD="your-secure-password" --name goosecode-server --env-file .env goosecode-base
 ```
 
 ## Goose Terminal API

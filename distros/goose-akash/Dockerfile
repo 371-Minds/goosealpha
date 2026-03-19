@@ -1,6 +1,6 @@
 # goose-akash — Goose distribution for Akash Network deployments
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - Akash CLI (deploy SDL templates directly)
 #   - IPFS CLI (decentralized storage)
 #   - SQLite3 (local agent state)
@@ -16,7 +16,7 @@
 #   AKASH_NODE=https://rpc.akashnet.net:443
 #   AKASH_CHAIN_ID=akashnet-2
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

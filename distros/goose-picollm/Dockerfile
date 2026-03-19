@@ -1,13 +1,13 @@
 # goose-picollm — Goose distribution for Picovoice picoLLM workflows
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - A shallow checkout of Picovoice/picollm
 #   - Goose system prompt tuned for edge LLM inference tasks
 #
 # Build:
 #   docker build -t goose-picollm -f distros/goose-picollm/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

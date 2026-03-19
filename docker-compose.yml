@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: goosecode-server:latest
+    image: goosecode-base:latest
     container_name: goosecode
     ports:
       - "${PORT:-8080}:8080"

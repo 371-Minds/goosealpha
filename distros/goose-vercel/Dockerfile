@@ -1,6 +1,6 @@
 # goose-vercel — Goose distribution for Vercel Edge + Expo deployments
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - Node.js LTS + pnpm
 #   - Vercel CLI  (deploy Next.js web targets)
 #   - Expo CLI + EAS CLI (React Native — iOS/Android)
@@ -16,7 +16,7 @@
 #   NEXT_APP_DIR      — Path to Next.js app inside /workspace (default: web)
 #   EXPO_APP_DIR      — Path to Expo app inside /workspace (default: mobile)
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root
