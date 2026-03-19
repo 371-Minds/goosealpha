@@ -15,10 +15,10 @@ code-server --install-extension PKief.material-product-icons >/dev/null 2>&1 || 
 echo "Configuring Goose..."
 
 # Create config directory
-mkdir -p $HOME/.config/goose
+mkdir -p "$HOME/.config/goose"
 
 # Create config file with the exact YAML format
-cat > $HOME/.config/goose/config.yaml << EOF
+cat > "$HOME/.config/goose/config.yaml" << EOF
 GOOSE_PROVIDER: openai
 extensions:
   developer:
@@ -33,7 +33,7 @@ EOF
 
 # Set the API key
 if [ -n "$OPENAI_API_KEY" ]; then
-  echo "OPENAI_API_KEY: $OPENAI_API_KEY" >> $HOME/.config/goose/config.yaml
+  echo "OPENAI_API_KEY: $OPENAI_API_KEY" >> "$HOME/.config/goose/config.yaml"
   echo "API key configured."
 else
   echo "Warning: OPENAI_API_KEY not set. Goose will not function correctly."
@@ -48,7 +48,7 @@ if [ "$ENABLE_TERMINAL_SHARING" = "true" ]; then
   echo "Setting up shared terminal with Goose..."
   
   # Create an improved tmux config for better multi-user experience
-  cat > $HOME/.tmux.conf << EOF
+  cat > "$HOME/.tmux.conf" << EOF
 # Set a more accessible prefix key
 unbind C-b
 set -g prefix C-a
@@ -92,7 +92,7 @@ set -g set-titles-string "#T"
 EOF
 
   # Create shared session script
-  cat > $HOME/shared-goose.sh << EOF
+  cat > "$HOME/shared-goose.sh" << EOF
 #!/bin/bash
 
 # The main session name that runs the actual command
@@ -132,10 +132,10 @@ tmux set-option -t "\$CLIENT_SESSION" status-left "[#S] "
 # Attach to our new client-specific session
 exec tmux attach-session -t "\$CLIENT_SESSION"
 EOF
-  chmod +x $HOME/shared-goose.sh
+  chmod +x "$HOME/shared-goose.sh"
   
   # Create a read-only script using the same session linking approach
-  cat > $HOME/goose-view.sh << 'EOF'
+  cat > "$HOME/goose-view.sh" << 'EOF'
 #!/bin/bash
 
 # The main session name that runs the actual command
@@ -163,7 +163,7 @@ tmux set-option -t "$VIEWER_SESSION" status-left "[READ-ONLY] "
 # Attach in read-only mode
 exec tmux attach-session -t "$VIEWER_SESSION" -r
 EOF
-  chmod +x $HOME/goose-view.sh
+  chmod +x "$HOME/goose-view.sh"
 
   # We no longer need a hook script since VS Code will use the default terminal profile
   # which is already configured to use shared-goose.sh
@@ -249,8 +249,8 @@ cat > /workspace/.vscode/settings.json << EOF
 EOF
 
 # Create code-server config with password
-mkdir -p $HOME/.config/code-server
-cat > $HOME/.config/code-server/config.yaml << EOF
+mkdir -p "$HOME/.config/code-server"
+cat > "$HOME/.config/code-server/config.yaml" << EOF
 bind-addr: 0.0.0.0:8080
 auth: password
 password: ${PASSWORD}
@@ -315,4 +315,4 @@ fi
 
 # Start VS Code Server
 echo "Starting code-server..."
-exec code-server --config $HOME/.config/code-server/config.yaml /workspace 
+exec code-server --config "$HOME/.config/code-server/config.yaml" /workspace 

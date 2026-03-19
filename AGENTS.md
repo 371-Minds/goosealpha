@@ -118,7 +118,6 @@ Password: `$PASSWORD` (default: `talktomegoose`)
 
 Adds on top of the base image:
 - Akash CLI (`akash`) — deploy SDL templates
-- ipfs CLI — for decentralized storage
 - sqlite3 — for local agent state
 - Pre-loaded SDL templates at `/opt/akash/sdls/`
 - System prompt focused on decentralized cloud engineering
@@ -173,7 +172,6 @@ Each component maps to a biological memory analogy:
 | SQLite | Working memory | (file) | Per-agent relational state |
 | Redis | Nerves (fast signals) | 6379 | Pub/sub, ephemeral cache, agent comms |
 | ChromaDB | Instincts (vector memory) | 8001 | Embeddings, semantic search |
-| Ceramic | Audit trail (immutable) | 7007 | Verifiable, decentralized data |
 
 Akash SDL deployment templates: `akash/sdls/`
 
@@ -187,7 +185,6 @@ CLICKHOUSE_URL=http://clickhouse:8123
 REDIS_URL=redis://redis:6379
 CHROMADB_URL=http://chromadb:8001
 SQLITE_PATH=/workspace/.db/agent_state.sqlite
-CERAMIC_URL=http://ceramic:7007
 ```
 
 ---
@@ -320,7 +317,6 @@ goosecode-server/
 │       ├── clickhouse.yaml     # ClickHouse Akash SDL
 │       ├── redis.yaml          # Redis Akash SDL
 │       ├── chromadb.yaml       # ChromaDB Akash SDL
-│       └── ceramic.yaml        # Ceramic Akash SDL
 │
 ├── mcp/
 │   └── shell-mcp.json          # shell-mcp MCP server config

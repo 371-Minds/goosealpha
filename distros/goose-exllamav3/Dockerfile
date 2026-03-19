@@ -1,13 +1,13 @@
 # goose-exllamav3 — Goose distribution for exllamav3 workflows
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - A shallow checkout of turboderp-org/exllamav3
 #   - Goose system prompt tuned for local LLM inference tasks
 #
 # Build:
 #   docker build -t goose-exllamav3 -f distros/goose-exllamav3/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

@@ -1,6 +1,6 @@
 # goose-mindport — Goose distribution for Mindport (Portless) local routing
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - Node.js LTS
 #   - The Portless CLI, exposed as both `portless` and `mindport`
 #   - A shallow checkout of vercel-labs/portless under /opt/integrations/mindport
@@ -9,7 +9,7 @@
 # Build:
 #   docker build -t goose-mindport -f distros/goose-mindport/Dockerfile .
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root

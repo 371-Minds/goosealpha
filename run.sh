@@ -2,7 +2,7 @@
 set -e
 
 # Variables
-IMAGE_NAME="goosecode-server"
+IMAGE_NAME="goosecode-base"
 CONTAINER_NAME="goosecode-server"
 HOST_PORT=8080
 CONTAINER_PORT=8080
@@ -69,6 +69,7 @@ done
 if [ -f .env ]; then
   # Source the .env file
   set -o allexport
+  # shellcheck source=/dev/null
   source .env
   set +o allexport
   
@@ -106,14 +107,14 @@ else
 fi
 
 # Stop and remove existing container if it exists
-if docker ps -a | grep -q $CONTAINER_NAME; then
+if docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Stopping and removing existing container..."
-  docker stop $CONTAINER_NAME >/dev/null 2>&1 || true
-  docker rm $CONTAINER_NAME >/dev/null 2>&1 || true
+  docker stop "$CONTAINER_NAME" >/dev/null 2>&1 || true
+  docker rm "$CONTAINER_NAME" >/dev/null 2>&1 || true
 fi
 
 # Build Docker image if it doesn't exist or if --rebuild flag is provided
-if [ "$REBUILD" = true ] || ! docker image inspect $IMAGE_NAME >/dev/null 2>&1; then
+if [ "$REBUILD" = true ] || ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
   echo "Building Docker image..."
   
   # If this is a forced rebuild, delete the workspace directory for a clean start
@@ -123,7 +124,7 @@ if [ "$REBUILD" = true ] || ! docker image inspect $IMAGE_NAME >/dev/null 2>&1; 
     echo "Workspace directory removed."
   fi
   
-  docker build -t $IMAGE_NAME .
+  docker build -t "$IMAGE_NAME" .
 fi
 
 # Create workspace directory if it doesn't exist
@@ -146,9 +147,9 @@ fi
 echo "Starting Goosecode Server container..."
 if [ "$ENABLE_API_MOUNT" = "true" ]; then
   docker run -d \
-    --name $CONTAINER_NAME \
-    -p $HOST_PORT:$CONTAINER_PORT \
-    -p $API_PORT:8000 \
+    --name "$CONTAINER_NAME" \
+    -p "$HOST_PORT:$CONTAINER_PORT" \
+    -p "$API_PORT:8000" \
     -v "$(pwd)/workspace:/workspace" \
     -v "$(pwd)/static:/workspace/static" \
     -v "$GOOSE_API_DIR:/workspace/goose-api" \
@@ -175,12 +176,12 @@ if [ "$ENABLE_API_MOUNT" = "true" ]; then
     -e FREENAME_API_SECRET="${FREENAME_API_SECRET:-}" \
     -e GOOSE_SESSION_ID="${GOOSE_SESSION_ID:-}" \
     -e GOOSE_RESUME_SESSION="${GOOSE_RESUME_SESSION:-false}" \
-    $IMAGE_NAME
+    "$IMAGE_NAME"
 else
   docker run -d \
-    --name $CONTAINER_NAME \
-    -p $HOST_PORT:$CONTAINER_PORT \
-    -p $API_PORT:8000 \
+    --name "$CONTAINER_NAME" \
+    -p "$HOST_PORT:$CONTAINER_PORT" \
+    -p "$API_PORT:8000" \
     -v "$(pwd)/workspace:/workspace" \
     -v "$(pwd)/static:/workspace/static" \
     -e OPENAI_API_KEY="${OPENAI_API_KEY:-}" \
@@ -206,23 +207,8 @@ else
     -e FREENAME_API_SECRET="${FREENAME_API_SECRET:-}" \
     -e GOOSE_SESSION_ID="${GOOSE_SESSION_ID:-}" \
     -e GOOSE_RESUME_SESSION="${GOOSE_RESUME_SESSION:-false}" \
-    $IMAGE_NAME
+    "$IMAGE_NAME"
 fi
-
-# Function to create a divider line
-print_divider() {
-  printf "\033[34m%s\033[0m\n" "+---------------------------------------------------------------------------+"
-}
-
-# Print header box
-print_header() {
-  local text="$1"
-  local text_length=${#text}
-  local padding=$(( (73 - text_length) / 2 ))
-  local pad_str=$(printf "%${padding}s" "")
-  
-  printf "\033[34m| %s%s%s |\033[0m\n" "$pad_str" "$text" "$pad_str"
-}
 
 # Clear the terminal before showing output
 clear
@@ -237,7 +223,8 @@ print_header() {
   local text="$1"
   local text_length=${#text}
   local padding=$(( (73 - text_length) / 2 ))
-  local pad_str=$(printf "%${padding}s" "")
+  local pad_str
+  pad_str=$(printf "%${padding}s" "")
   
   printf "\033[34m| %s%s%s |\033[0m\n" "$pad_str" "$text" "$pad_str"
 }

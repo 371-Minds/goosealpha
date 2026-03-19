@@ -1,8 +1,7 @@
 # goose-akash — Goose distribution for Akash Network deployments
 #
-# Extends the base goosecode-server image with:
+# Extends the base goosecode-base image with:
 #   - Akash CLI (deploy SDL templates directly)
-#   - IPFS CLI (decentralized storage)
 #   - SQLite3 (local agent state)
 #   - Pre-loaded Akash SDL templates
 #   - Goose system prompt tuned for Akash engineering tasks
@@ -16,7 +15,7 @@
 #   AKASH_NODE=https://rpc.akashnet.net:443
 #   AKASH_CHAIN_ID=akashnet-2
 
-ARG BASE_IMAGE=goosecode-server:latest
+ARG BASE_IMAGE=goosecode-base:latest
 FROM ${BASE_IMAGE}
 
 USER root
@@ -49,22 +48,6 @@ RUN set -eux; \
     chmod +x /usr/local/bin/akash; \
     rm /tmp/akash.zip; \
     akash version || true
-
-# ---------------------------------------------------------------------------
-# IPFS CLI (kubo)
-# ---------------------------------------------------------------------------
-ARG IPFS_VERSION=0.29.0
-RUN set -eux; \
-    ARCH=$(uname -m); \
-    case "$ARCH" in \
-      x86_64)  GOARCH=amd64 ;; \
-      aarch64) GOARCH=arm64 ;; \
-      *)       echo "Unsupported arch: $ARCH" && exit 1 ;; \
-    esac; \
-    curl -fsSL "https://dist.ipfs.tech/kubo/v${IPFS_VERSION}/kubo_v${IPFS_VERSION}_linux-${GOARCH}.tar.gz" \
-      | tar -xz -C /usr/local/bin/ --strip-components=1 kubo/ipfs; \
-    chmod +x /usr/local/bin/ipfs; \
-    ipfs version || true
 
 # ---------------------------------------------------------------------------
 # SDL templates

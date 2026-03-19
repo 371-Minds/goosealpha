@@ -14,15 +14,11 @@ host environment.
    - ClickHouse (`/opt/akash/sdls/clickhouse.yaml`) — Titan memory
    - Redis (`/opt/akash/sdls/redis.yaml`) — Nerve signals
    - ChromaDB (`/opt/akash/sdls/chromadb.yaml`) — Vector instincts
-   - Ceramic (`/opt/akash/sdls/ceramic.yaml`) — Immutable audit trail
 
 3. **Agent state**: Use SQLite at `$SQLITE_PATH` for per-task relational state.  Always commit
    a final status row before handing off to the next agent.
 
-4. **IPFS storage**: Pin large artifacts (build outputs, datasets) to IPFS and record the CID
-   in the agent state database.
-
-5. **Security**: Never write secrets to workspace files.  Use environment variables exclusively.
+4. **Security**: Never write secrets to workspace files.  Use environment variables exclusively.
    Treat every VM as ephemeral; critical state must be persisted to the data stack before exit.
 
 ## SDL authoring guidelines
