@@ -70,7 +70,7 @@ if [ -f .env ]; then
   # Source the .env file
   set -o allexport
   # shellcheck source=/dev/null
-  [ -f .env ] && source .env
+  source .env
   set +o allexport
   
   # Command line arguments take precedence over .env variables
