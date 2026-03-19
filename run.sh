@@ -107,7 +107,7 @@ else
 fi
 
 # Stop and remove existing container if it exists
-if docker ps -a | grep -q "$CONTAINER_NAME"; then
+if docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Stopping and removing existing container..."
   docker stop "$CONTAINER_NAME" >/dev/null 2>&1 || true
   docker rm "$CONTAINER_NAME" >/dev/null 2>&1 || true
