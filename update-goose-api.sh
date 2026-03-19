@@ -9,7 +9,7 @@ CONTAINER_NAME=${1:-goosecode-server}
 echo "Updating Goose API in container: $CONTAINER_NAME"
 
 # Check if container exists and is running
-if ! docker ps | grep -q "$CONTAINER_NAME"; then
+if ! docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Error: Container $CONTAINER_NAME is not running."
   echo "Usage: $0 [container-name]"
   exit 1
