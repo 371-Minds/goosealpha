@@ -118,7 +118,6 @@ Password: `$PASSWORD` (default: `talktomegoose`)
 
 Adds on top of the base image:
 - Akash CLI (`akash`) — deploy SDL templates
-- ipfs CLI — for decentralized storage
 - sqlite3 — for local agent state
 - Pre-loaded SDL templates at `/opt/akash/sdls/`
 - System prompt focused on decentralized cloud engineering

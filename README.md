@@ -96,7 +96,7 @@ Build a Goose distribution pre-packed with the exact CLIs and system prompts for
 
 ### goose-akash — Akash Network deployments
 
-Adds the Akash CLI, IPFS CLI, SQLite, and pre-loaded SDL templates.  System prompt is tuned for decentralised cloud engineering.
+Adds the Akash CLI, SQLite, and pre-loaded SDL templates.  System prompt is tuned for decentralised cloud engineering.
 
 ```bash
 # Build base first
