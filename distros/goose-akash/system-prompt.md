@@ -14,7 +14,6 @@ host environment.
    - ClickHouse (`/opt/akash/sdls/clickhouse.yaml`) — Titan memory
    - Redis (`/opt/akash/sdls/redis.yaml`) — Nerve signals
    - ChromaDB (`/opt/akash/sdls/chromadb.yaml`) — Vector instincts
-   - Ceramic (`/opt/akash/sdls/ceramic.yaml`) — Immutable audit trail
 
 3. **Agent state**: Use SQLite at `$SQLITE_PATH` for per-task relational state.  Always commit
    a final status row before handing off to the next agent.

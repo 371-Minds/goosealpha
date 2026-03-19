@@ -7,7 +7,6 @@ version: "3.9"
 #   clickhouse — Titan analytics / long-term memory (port 8123)
 #   redis      — Nerves fast cache / pub-sub (port 6379)
 #   chromadb   — Vector instincts / semantic search (port 8001)
-#   ceramic    — Decentralised audit trail (port 7007)
 #
 # Usage:
 #   docker compose up          # start all services
@@ -145,22 +144,7 @@ services:
       - chromadb_data:/chroma/data
     restart: unless-stopped
 
-  # ---------------------------------------------------------------------------
-  # Ceramic — Decentralised Audit Trail (mutable, verifiable)
-  # ---------------------------------------------------------------------------
-  ceramic:
-    image: ceramicnetwork/js-ceramic:5.10.0
-    container_name: ceramic
-    ports:
-      - "7007:7007"
-    environment:
-      CERAMIC_NETWORK: mainnet
-    volumes:
-      - ceramic_data:/root/.ceramic
-    restart: unless-stopped
-
 volumes:
   clickhouse_data:
   redis_data:
   chromadb_data:
-  ceramic_data:

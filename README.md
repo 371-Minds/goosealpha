@@ -200,7 +200,6 @@ Deploy a specialised, multi-tiered data stack that mimics biological memory syst
 | **ClickHouse** | Titan (long-term memory) | 8123 | Analytics, event logs, agent traces |
 | **Redis** | Nerves (fast signals) | 6379 | Pub/sub, ephemeral cache, agent comms |
 | **ChromaDB** | Instincts (vector memory) | 8001 | Embeddings, semantic search |
-| **Ceramic** | Audit trail (immutable) | 7007 | Verifiable, decentralised data |
 | **SQLite** | Working memory | (file) | Per-agent relational state |
 
 All services start with `docker compose up`.  Akash SDL deployment templates for each service are in `akash/sdls/`.
