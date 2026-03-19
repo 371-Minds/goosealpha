@@ -11,7 +11,7 @@ CONTAINER_NAME=${1:-goosecode-server}
 echo "Using container name: $CONTAINER_NAME"
 
 # Check if container exists
-if ! docker ps -a | grep -q "$CONTAINER_NAME"; then
+if ! docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Error: Container '$CONTAINER_NAME' not found."
   echo "Usage: $0 [container-name]"
   exit 1
